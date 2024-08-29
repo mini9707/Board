@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .nav {
+            display: flex;
+            padding: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+    <script>
+        function lo(){
+            console.log(1)
+        }
+        function logout() {
+            debugger;
+            $.ajax({
+                url: '/logout',
+                type: 'POST',
+                success: function (response) {
+                    alert('로그아웃 되었습니다.');
+                    window.location.href = '/';
+                },
+                error: function (xhr, status, error) {
+                    alert('로그아웃 실패: ' + xhr.responseText);
+                }
+            });
+        }
+        $(document).ready(function() {
+
+            lo()
+            // $('#logout-button').on('click', function() {
+            //     logout();
+            // });
+        });
+    </script>
+
+<body>
+<div class="nav" th:fragment="navbar">
+    <p>강성현의 코딩교실</p>
+    <div>
+        <div th:if="${session.username}">
+            <p id="nav-username" th:text="${session.username}">Username</p>
+            <button onclick="logout()">LOGOUT</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Sign Up</title>
+
+    <style>
+        .login-wrapper {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+        .login-wrapper h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-wrapper form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .login-wrapper form button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-wrapper form button:hover {
+            background-color: #218838;
+        }
+        #username-check {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="login-wrapper">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+        <input type="text" name="username" placeholder="ID" id="username">
+        <button type="button" onclick="checkUsername()">중복 체크</button>
+        <p id="username-check"style="display: none"></p>
+        <input type="text" name="displayName" placeholder="Display Name" id="displayName">
+        <input type="password" name="password" placeholder="Password" id="password">
+        <input type="button" value="Sign Up" onclick="signup()">
+    </form>
+</div>
+
+<script>
+    function checkUsername() {
+        var username = $('#username').val();
+        if (username.length > 0) {
+            $.ajax({
+                method: 'GET',
+                url: '/check-username',
+                data: { username: username },
+                success: function (response) {
+                    alert("사용가능한 아이디입니다.");
+                    $('#username-check').text("가능")
+                },
+                error: function (xhr) {
+                    alert("이미 사용중인 아이디입니다.")
+                    $('#username-check').text("불가능")
+                }
+            });
+        } else {
+            alert("아이디를 입력해주세요.")
+        }
+    }
+
+    function signup() {
+        var checkMessage = $('#username-check').text();
+        if (checkMessage === "가능") {
+            $.ajax({
+                method: 'POST',
+                url: '/sign-up',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "username": $('#username').val(),
+                    "displayName": $('#displayName').val(),
+                    "password": $('#password').val()
+                }),
+                success: function (data) {
+                    alert("회원가입이 완료되었습니다.");
+                    window.location.href = '/login';
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("회원가입에 실패했습니다.");
+                }
+            });
+        } else {
+            alert("아이디 중복 체크를 완료하십시오.");
+        }
+    }
+</script>
+
+</body>
+</html>
