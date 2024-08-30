@@ -35,7 +35,7 @@ public class BoardController {
         if(username == null){
             return "/login";
         } else {
-            List<Board> result = boardRepository.findAll();
+            List<Board> result = boardRepository.findAllByOrderByCreateTimeAsc();
             model.addAttribute("boards", result);
             return "board";
         }
@@ -57,9 +57,7 @@ public class BoardController {
     String boardDetail(@PathVariable("id") Long id, Model model, HttpSession httpSession) {
         Optional<Board> result = boardRepository.findById(id);
         if (result.isPresent()) {
-//            String member = httpSession.getAttribute("username");
             model.addAttribute("board", result.get());
-//            model.addAttribute("username", httpSession.getAttribute("username"));
             return "detail";
         } else {
             return "redirect:/";

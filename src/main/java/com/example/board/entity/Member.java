@@ -35,6 +35,7 @@ public class Member {
     @PrePersist //엔티티가 영속성 컨텍스트에 저장되기 전에 호출되는 콜백 메서드
     protected void onCreate() {
         this.createTime = LocalDateTime.now();
+        this.editTime = LocalDateTime.now();
     }
 
     @PreUpdate

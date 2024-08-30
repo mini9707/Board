@@ -125,10 +125,12 @@
 
 <table>
     <tr><td><h2>글쓰기</h2></td></tr>
-    <tr><td class="header">Title</td></tr>
+    <tr><td class="header">제목</td></tr>
     <tr><td><input type="text" th:value="${board.title}" name="title" id="title"></td></tr>
-    <tr><td th:text="${board.createTime}"></td></tr>
-    <tr><td class="header">Comment</td></tr>
+    <tr><td th:text="'작성일자 : ' + ${#temporals.format(board.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td></tr>
+    <tr><td th:text="'수정일자 : ' + ${#temporals.format(board.editTime, 'yyyy-MM-dd HH:mm:ss')}"></td></tr>
+    <tr><td th:text="'작성자 : ' + ${board.getMember().getUsername()}"></td></tr>
+    <tr><td class="header">내용</td></tr>
     <tr><td><textarea th:text="${board.content}" name="detail" id="content"></textarea></td></tr>
     <tr><td><input type="submit" value="수정" th:attr="onclick='editPost(' + ${board.getId()} + ')'"></td></tr>
     <tr><td><input type="submit" value="삭제" th:attr="onclick='deletePost(' + ${board.getId()} + ')'"></td></tr>

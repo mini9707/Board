@@ -81,7 +81,7 @@
             <a th:text="${i.title}" th:href="@{'/detail/' + ${i.id}}"></a>
         </td>
         <td th:text="${i.member.getUsername}">작성자</td>
-        <td th:text="${i.createTime}"></td>
+        <td th:text="${#temporals.format(i.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
     </tr>
 </table>
 

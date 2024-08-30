@@ -68,6 +68,15 @@ public class MemberController {
     // 회원가입 요청
     @PostMapping("/sign-up")
     public ResponseEntity<String> addMember(@RequestBody Member memberRequestDto) {
+        if (memberRequestDto.getUsername().isEmpty()) {
+            return ResponseEntity.badRequest().body("아이디를 입력해주세요.");
+        }
+        if (memberRequestDto.getDisplayName().isEmpty()) {
+            return ResponseEntity.badRequest().body("이름을 입력해주세요.");
+        }
+        if (memberRequestDto.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("비밀번호를 입력해주세요.");
+        }
         var result = memberRepository.findByUsername(memberRequestDto.getUsername());
         if (result.isEmpty()) {
             Member member = new Member(memberRequestDto.getUsername(), memberRequestDto.getDisplayName(), memberRequestDto.getPassword());
