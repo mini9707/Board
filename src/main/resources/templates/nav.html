@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>게시판</title>
     <style>
         .nav {
             display: flex;
             padding: 10px;
             align-items: center;
+            justify-content: space-between;
         }
     </style>
-</head>
     <script>
-        function lo(){
-            console.log(1)
-        }
         function logout() {
-            debugger;
             $.ajax({
                 url: '/logout',
                 type: 'POST',
@@ -30,23 +27,15 @@
                 }
             });
         }
-        $(document).ready(function() {
-
-            lo()
-            // $('#logout-button').on('click', function() {
-            //     logout();
-            // });
-        });
     </script>
+</head>
 
 <body>
 <div class="nav" th:fragment="navbar">
     <p>강성현의 코딩교실</p>
-    <div>
-        <div th:if="${session.username}">
-            <p id="nav-username" th:text="${session.username}">Username</p>
-            <button onclick="logout()">LOGOUT</button>
-        </div>
+    <div th:if="${session.username}">
+        <p id="nav-username" th:text="${session.username}">Username</p>
+        <button onclick="logout()">LOGOUT</button>
     </div>
 </div>
-
+</body>

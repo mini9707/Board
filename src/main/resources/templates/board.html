@@ -2,8 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta .name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/main.js"></script>
     <title>게시판</title>
     <style>
         table {
@@ -54,33 +55,36 @@
             padding-left: 10px;
             background-color: rgb(68, 136, 244);
         }
+        .nav {
+            display: flex;
+            padding: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
     </style>
-    <script>
-    </script>
 </head>
+
 <body>
-<!--<div th:replace="~{nav.html::navbar}"></div>-->
+<div th:replace="~{nav.html::navbar}"></div>
+
 <table class="table">
-    <tr><td colspan="2"><h2>게시판</h2></td></tr>
+    <tr><td colspan="4"><h2>게시판</h2></td></tr>
     <tr class="header">
-        <td class="num">번호</td>
-        <td class="title">제목</td>
-        <td>작성자</td>
-        <td>작성날짜</td>
+        <th class="num">번호</th>
+        <th class="title">제목</th>
+        <th>작성자</th>
+        <th>작성날짜</th>
     </tr>
-    <div th:each="i:${boards}">
-        <tr class="body">
-            <td th:text="${i.id}"></td>
-            <td class="title" >
-                <a th:text="${i.title}" th:href="@{'/detail/' + ${i.id}}"></a>
-            </td>
-            <td th:text="${i.member.getUsername}">작성자</td>
-            <td th:text="${i.createTime}"></td>
-
-        </tr>
-    </div>
-
+    <tr th:each="i : ${boards}" class="body">
+        <td th:text="${i.id}"></td>
+        <td class="title">
+            <a th:text="${i.title}" th:href="@{'/detail/' + ${i.id}}"></a>
+        </td>
+        <td th:text="${i.member.getUsername}">작성자</td>
+        <td th:text="${i.createTime}"></td>
+    </tr>
 </table>
+
 <br>
 <table>
     <tr>
